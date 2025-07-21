@@ -24,6 +24,11 @@ export default function EditItemModal({ isOpen, onClose, item, users }: EditItem
   const queryClient = useQueryClient();
   const isEditing = Boolean(item);
 
+  const formatDateForInput = (date: Date | string | null) => {
+    if (!date) return "";
+    return format(new Date(date), "yyyy-MM-dd");
+  };
+
   const form = useForm({
     resolver: zodResolver(insertSprintItemSchema),
     defaultValues: {
@@ -35,10 +40,10 @@ export default function EditItemModal({ isOpen, onClose, item, users }: EditItem
       sprintNumber: item?.sprintNumber || undefined,
       hoursOfEffort: item?.hoursOfEffort || undefined,
       points: item?.points || undefined,
-      startDate: item?.startDate ? new Date(item.startDate) : undefined,
-      plannedCompleteDate: item?.plannedCompleteDate ? new Date(item.plannedCompleteDate) : undefined,
-      actualCompleteDate: item?.actualCompleteDate ? new Date(item.actualCompleteDate) : undefined,
-      readyDate: item?.readyDate ? new Date(item.readyDate) : undefined,
+      startDate: item?.startDate ? formatDateForInput(item.startDate) : "",
+      plannedCompleteDate: item?.plannedCompleteDate ? formatDateForInput(item.plannedCompleteDate) : "",
+      actualCompleteDate: item?.actualCompleteDate ? formatDateForInput(item.actualCompleteDate) : "",
+      readyDate: item?.readyDate ? formatDateForInput(item.readyDate) : "",
     },
   });
 
@@ -91,11 +96,6 @@ export default function EditItemModal({ isOpen, onClose, item, users }: EditItem
     } else {
       createMutation.mutate(processedData);
     }
-  };
-
-  const formatDateForInput = (date: Date | string | null) => {
-    if (!date) return "";
-    return format(new Date(date), "yyyy-MM-dd");
   };
 
   return (
@@ -375,7 +375,7 @@ export default function EditItemModal({ isOpen, onClose, item, users }: EditItem
               />
             </div>
 
-            <div className="flex justify-end space-x-4 pt-4 border-t border-slate-200">
+            <div className="flex justify-end space-x-4 pt-6 border-t border-slate-200">
               <Button type="button" variant="outline" onClick={onClose}>
                 Cancel
               </Button>

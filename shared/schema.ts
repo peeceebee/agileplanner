@@ -41,10 +41,22 @@ export const insertSprintItemSchema = createInsertSchema(sprintItems).omit({
   hoursOfEffort: z.number().min(0).optional(),
   points: z.number().min(0).optional(),
   sprintNumber: z.number().min(1).optional(),
-  startDate: z.string().transform(val => val ? new Date(val) : null).nullable().optional(),
-  plannedCompleteDate: z.string().transform(val => val ? new Date(val) : null).nullable().optional(),
-  actualCompleteDate: z.string().transform(val => val ? new Date(val) : null).nullable().optional(),
-  readyDate: z.string().transform(val => val ? new Date(val) : null).nullable().optional(),
+  startDate: z.union([z.string(), z.date()]).transform(val => {
+    if (!val || val === "") return null;
+    return typeof val === 'string' ? new Date(val) : val;
+  }).nullable().optional(),
+  plannedCompleteDate: z.union([z.string(), z.date()]).transform(val => {
+    if (!val || val === "") return null;
+    return typeof val === 'string' ? new Date(val) : val;
+  }).nullable().optional(),
+  actualCompleteDate: z.union([z.string(), z.date()]).transform(val => {
+    if (!val || val === "") return null;
+    return typeof val === 'string' ? new Date(val) : val;
+  }).nullable().optional(),
+  readyDate: z.union([z.string(), z.date()]).transform(val => {
+    if (!val || val === "") return null;
+    return typeof val === 'string' ? new Date(val) : val;
+  }).nullable().optional(),
 });
 
 export const insertUserSchema = createInsertSchema(users).omit({
