@@ -32,13 +32,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Create new sprint item
   app.post("/api/sprint-items", async (req, res) => {
     try {
+      console.log("Received request body:", JSON.stringify(req.body, null, 2));
       const validatedData = insertSprintItemSchema.parse(req.body);
       const item = await storage.createSprintItem(validatedData);
       res.status(201).json(item);
     } catch (error) {
       if (error instanceof z.ZodError) {
+        console.log("Validation errors:", JSON.stringify(error.errors, null, 2));
         return res.status(400).json({ message: "Invalid data", errors: error.errors });
       }
+      console.log("Server error:", error);
       res.status(500).json({ message: "Failed to create sprint item" });
     }
   });
@@ -46,6 +49,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Update sprint item
   app.put("/api/sprint-items/:id", async (req, res) => {
     try {
+      console.log("Update request body:", JSON.stringify(req.body, null, 2));
       const id = parseInt(req.params.id);
       const validatedData = insertSprintItemSchema.partial().parse(req.body);
       const item = await storage.updateSprintItem(id, validatedData);
@@ -55,8 +59,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(item);
     } catch (error) {
       if (error instanceof z.ZodError) {
+        console.log("Update validation errors:", JSON.stringify(error.errors, null, 2));
         return res.status(400).json({ message: "Invalid data", errors: error.errors });
       }
+      console.log("Update server error:", error);
       res.status(500).json({ message: "Failed to update sprint item" });
     }
   });
