@@ -77,10 +77,13 @@ export default function EditItemModal({ isOpen, onClose, item, users }: EditItem
     const processedData = {
       ...data,
       assignedUser: data.assignedUser === "unassigned" ? null : data.assignedUser,
-      startDate: data.startDate ? new Date(data.startDate) : null,
-      plannedCompleteDate: data.plannedCompleteDate ? new Date(data.plannedCompleteDate) : null,
-      actualCompleteDate: data.actualCompleteDate ? new Date(data.actualCompleteDate) : null,
-      readyDate: data.readyDate ? new Date(data.readyDate) : null,
+      sprintNumber: data.sprintNumber && data.sprintNumber !== "" ? parseInt(data.sprintNumber) : null,
+      points: data.points && data.points !== "" ? parseInt(data.points) : null,
+      hoursOfEffort: data.hoursOfEffort && data.hoursOfEffort !== "" ? parseFloat(data.hoursOfEffort) : null,
+      startDate: data.startDate && data.startDate !== "" ? new Date(data.startDate) : null,
+      plannedCompleteDate: data.plannedCompleteDate && data.plannedCompleteDate !== "" ? new Date(data.plannedCompleteDate) : null,
+      actualCompleteDate: data.actualCompleteDate && data.actualCompleteDate !== "" ? new Date(data.actualCompleteDate) : null,
+      readyDate: data.readyDate && data.readyDate !== "" ? new Date(data.readyDate) : null,
     };
 
     if (isEditing) {
