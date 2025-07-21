@@ -41,10 +41,10 @@ export const insertSprintItemSchema = createInsertSchema(sprintItems).omit({
   hoursOfEffort: z.number().min(0).optional(),
   points: z.number().min(0).optional(),
   sprintNumber: z.number().min(1).optional(),
-  startDate: z.date().nullable().optional(),
-  plannedCompleteDate: z.date().nullable().optional(),
-  actualCompleteDate: z.date().nullable().optional(),
-  readyDate: z.date().nullable().optional(),
+  startDate: z.string().transform(val => val ? new Date(val) : null).nullable().optional(),
+  plannedCompleteDate: z.string().transform(val => val ? new Date(val) : null).nullable().optional(),
+  actualCompleteDate: z.string().transform(val => val ? new Date(val) : null).nullable().optional(),
+  readyDate: z.string().transform(val => val ? new Date(val) : null).nullable().optional(),
 });
 
 export const insertUserSchema = createInsertSchema(users).omit({
