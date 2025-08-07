@@ -1,0 +1,12 @@
+{
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "github",
+    "plane"
+  ],
+  "permissions": {
+    "allow": [
+      "Bash(echo $HOMEPATH)"
+    ]
+  }
+}
