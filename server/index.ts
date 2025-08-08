@@ -18,6 +18,7 @@ app.use((req, res, next) => {
   };
 
   res.on("finish", () => {
+    console.log("Hook event: response finish");
     const duration = Date.now() - start;
     if (path.startsWith("/api")) {
       let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
@@ -31,6 +32,14 @@ app.use((req, res, next) => {
 
       log(logLine);
     }
+  });
+
+  res.on("close", () => {
+    console.log("Hook event: response close");
+  });
+
+  res.on("error", (err) => {
+    console.log("Hook event: response error", err);
   });
 
   next();
